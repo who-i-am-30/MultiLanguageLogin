@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}{{ snippet.title }} - Code Library{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h4 class="mb-0">
+                                <span class="badge bg-info me-2">{{ snippet.language }}</span>
+                                {{ snippet.title }}
+                            </h4>
+                            <small class="text-muted">
+                                <i class="fas fa-user me-1"></i>{{ snippet.author.username }}
+                                <i class="fas fa-clock ms-3 me-1"></i>{{ snippet.created_at.strftime('%Y-%m-%d %H:%M') }}
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-outline-primary" onclick="copyCode()">
+                                <i class="fas fa-copy me-2"></i>Copy Code
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="copyShareLink()">
+                                <i class="fas fa-share me-2"></i>Copy Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body p-0">
+                    <div class="code-container">
+                        <textarea id="codeViewer" readonly>{{ snippet.code }}</textarea>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <small class="text-muted">
+                                <i class="fas fa-share-alt me-1"></i>
+                                Share this snippet: 
+                                <code class="share-url">{{ request.url }}</code>
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            {% if session.user_id %}
+                                <a href="{{ url_for('library') }}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Library
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="copyToast" class="toast" role="alert">
+        <div class="toast-header">
+            <i class="fas fa-check-circle text-success me-2"></i>
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" id="toastMessage">
+            Content copied to clipboard!
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- CodeMirror JS for read-only viewing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/php/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/ruby/ruby.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/go/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/rust/rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/swift/swift.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/sql/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/shell/shell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/yaml/yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
+
+<script>
+let editor;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize CodeMirror for read-only viewing
+    editor = CodeMirror.fromTextArea(document.getElementById('codeViewer'), {
+        mode: getCodeMirrorMode('{{ snippet.language }}'),
+        theme: 'monokai',
+        lineNumbers: true,
+        readOnly: true,
+        styleActiveLine: false,
+        matchBrackets: true,
+        autoCloseBrackets: false,
+        lineWrapping: true
+    });
+    
+    // Set height
+    editor.setSize(null, 400);
+});
+
+function getCodeMirrorMode(language) {
+    const modeMap = {
+        'javascript': 'text/javascript',
+        'typescript': 'text/typescript',
+        'python': 'text/x-python',
+        'java': 'text/x-java',
+        'cpp': 'text/x-c++src',
+        'c': 'text/x-csrc',
+        'csharp': 'text/x-csharp',
+        'php': 'text/x-php',
+        'ruby': 'text/x-ruby',
+        'go': 'text/x-go',
+        'rust': 'text/x-rustsrc',
+        'swift': 'text/x-swift',
+        'kotlin': 'text/x-kotlin',
+        'html': 'text/html',
+        'css': 'text/css',
+        'sql': 'text/x-sql',
+        'shell': 'text/x-sh',
+        'yaml': 'text/x-yaml',
+        'json': 'application/json',
+        'xml': 'text/xml'
+    };
+    
+    return modeMap[language] || 'text/plain';
+}
+
+function copyCode() {
+    const code = editor.getValue();
+    navigator.clipboard.writeText(code).then(function() {
+        showToast('Code copied to clipboard!');
+    }).catch(function() {
+        // Fallback for browsers that don't support clipboard API
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('Code copied to clipboard!');
+    });
+}
+
+function copyShareLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(function() {
+        showToast('Share link copied to clipboard!');
+    }).catch(function() {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('Share link copied to clipboard!');
+    });
+}
+
+function showToast(message) {
+    document.getElementById('toastMessage').textContent = message;
+    const toast = new bootstrap.Toast(document.getElementById('copyToast'));
+    toast.show();
+}
+</script>
+{% endblock %}
