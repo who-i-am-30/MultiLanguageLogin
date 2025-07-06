@@ -72,10 +72,10 @@ def login():
                 flash('Invalid password', 'error')
                 
         elif login_type == 'temp':
-            # Temporary login with just 5-digit ID
+            # Quick login with 5-digit ID and password
             user_id = request.form['user_id']
-            if not user_id:
-                flash('5-digit ID is required for quick access', 'error')
+            if not user_id or not password:
+                flash('5-digit ID and password are required for quick access', 'error')
                 return render_template('login.html')
             
             user = User.query.filter_by(user_id=user_id).first()
@@ -83,11 +83,14 @@ def login():
                 flash('Invalid 5-digit ID', 'error')
                 return render_template('login.html')
             
-            session['user_id'] = user.id
-            session['username'] = user.username
-            session['login_type'] = 'temp'
-            flash('Quick access successful!', 'success')
-            return redirect(url_for('editor'))
+            if user.check_password(password):
+                session['user_id'] = user.id
+                session['username'] = user.username
+                session['login_type'] = 'temp'
+                flash('Quick access successful!', 'success')
+                return redirect(url_for('editor'))
+            else:
+                flash('Invalid password', 'error')
     
     return render_template('login.html')
 

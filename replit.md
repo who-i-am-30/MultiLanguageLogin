@@ -8,7 +8,7 @@ This is a Flask-based web application that allows users to store, organize, and 
 
 ### Backend Architecture
 - **Framework**: Flask (Python web framework)
-- **Database**: SQLite with SQLAlchemy ORM
+- **Database**: PostgreSQL with SQLAlchemy ORM
 - **Authentication**: Session-based with password hashing using Werkzeug
 - **Data Models**: User and CodeSnippet models with foreign key relationships
 
@@ -20,17 +20,19 @@ This is a Flask-based web application that allows users to store, organize, and 
 - **JavaScript**: Vanilla JS for client-side interactions
 
 ### Database Schema
-- **Users Table**: Stores user credentials with unique 5-digit IDs
+- **Users Table**: Stores user credentials with unique 5-digit IDs and email addresses
 - **Code Snippets Table**: Stores code with metadata and sharing capabilities
 - **Relationships**: One-to-many between Users and CodeSnippets
+- **Database**: PostgreSQL for production-ready reliability and scalability
 
 ## Key Components
 
 ### Authentication System
-- **User Registration**: Generates unique 5-digit user IDs automatically
-- **Login Options**: Full login (ID + password) and quick login (ID only for temporary sessions)
-- **Password Security**: Uses Werkzeug's password hashing utilities
+- **User Registration**: Generates unique 5-digit user IDs automatically with email addresses
+- **Login Options**: Full login (email + password) and quick login (5-digit ID + password)
+- **Password Security**: Both login methods require password authentication using Werkzeug's hashing
 - **Session Management**: Flask sessions for maintaining user state
+- **Two-Tier Interface**: Email-based full interface and ID-based streamlined interface
 
 ### Code Management
 - **Code Editor**: Full-screen CodeMirror editor with syntax highlighting
