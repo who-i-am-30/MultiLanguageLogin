@@ -7,42 +7,64 @@
     <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
             <div class="mb-5">
-                <i class="fas fa-code fa-4x text-primary mb-4"></i>
-                <h1 class="display-4 fw-bold mb-3">Code Library</h1>
-                <p class="lead text-muted">Store and share your favorite code snippets with syntax highlighting and easy sharing capabilities.</p>
+                <div class="position-relative">
+                    <i class="fas fa-code fa-5x text-primary mb-4 position-relative" style="text-shadow: 0 0 20px rgba(var(--bs-primary-rgb), 0.3);"></i>
+                    <div class="position-absolute top-0 start-50 translate-middle">
+                        <i class="fas fa-sparkles fa-xs text-warning" style="animation: twinkle 2s infinite;"></i>
+                    </div>
+                </div>
+                <h1 class="display-3 fw-bold mb-3 bg-gradient text-primary">CodeVault</h1>
+                <p class="lead text-muted mb-4">Your personal code snippet sanctuary. Store, organize, and share beautiful code with syntax highlighting and lightning-fast access.</p>
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                    <span class="badge bg-primary-subtle text-primary px-3 py-2">Syntax Highlighting</span>
+                    <span class="badge bg-success-subtle text-success px-3 py-2">Instant Sharing</span>
+                    <span class="badge bg-warning-subtle text-warning px-3 py-2">Quick Access</span>
+                </div>
             </div>
 
             {% if not session.user_id %}
                 <div class="row g-4">
                     <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <i class="fas fa-user-plus fa-2x text-success mb-3"></i>
-                                <h5 class="card-title">Register</h5>
-                                <p class="card-text">Create a new account and get your unique 5-digit ID</p>
-                                <a href="{{ url_for('register') }}" class="btn btn-success">Get Started</a>
+                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--bs-success-bg-subtle) 0%, var(--bs-primary-bg-subtle) 100%);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Join CodeVault</h5>
+                                <p class="card-text">Create your account and get instant access with your unique 5-digit ID</p>
+                                <a href="{{ url_for('register') }}" class="btn btn-success btn-lg px-4">
+                                    <i class="fas fa-rocket me-2"></i>Get Started
+                                </a>
                             </div>
                         </div>
                     </div>
                     
                     <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <i class="fas fa-lock fa-2x text-primary mb-3"></i>
-                                <h5 class="card-title">Full Login</h5>
-                                <p class="card-text">Login with your ID and password for full access</p>
-                                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--bs-primary-bg-subtle) 0%, var(--bs-info-bg-subtle) 100%);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-crown fa-3x text-primary mb-3"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Full Control</h5>
+                                <p class="card-text">Login with your email and password for complete access to all features</p>
+                                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Full Login
+                                </a>
                             </div>
                         </div>
                     </div>
                     
                     <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <i class="fas fa-clock fa-2x text-warning mb-3"></i>
-                                <h5 class="card-title">Quick Access</h5>
-                                <p class="card-text">Temporary login with just your 5-digit ID</p>
-                                <a href="{{ url_for('login') }}" class="btn btn-outline-warning">Quick Login</a>
+                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--bs-warning-bg-subtle) 0%, var(--bs-orange-bg-subtle) 100%);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-bolt fa-3x text-warning mb-3"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Lightning Fast</h5>
+                                <p class="card-text">Quick temporary access with just your 5-digit ID - no password needed!</p>
+                                <a href="{{ url_for('login') }}" class="btn btn-warning btn-lg px-4">
+                                    <i class="fas fa-bolt me-2"></i>Quick Access
+                                </a>
                             </div>
                         </div>
                     </div>

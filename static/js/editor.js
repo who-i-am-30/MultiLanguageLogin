@@ -147,21 +147,28 @@ function saveSnippet() {
 
 // Auto-save functionality (optional)
 let autoSaveTimer;
-editor.on('change', function() {
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => {
-        // Could implement auto-save to localStorage here
-        const title = document.getElementById('snippetTitle').value.trim();
-        if (title && editor.getValue().trim()) {
-            localStorage.setItem('editor_draft', JSON.stringify({
-                title: title,
-                language: document.getElementById('languageSelect').value,
-                code: editor.getValue(),
-                timestamp: Date.now()
-            }));
-        }
-    }, 1000);
-});
+function initializeAutoSave() {
+    if (editor) {
+        editor.on('change', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                // Could implement auto-save to localStorage here
+                const title = document.getElementById('snippetTitle').value.trim();
+                if (title && editor.getValue().trim()) {
+                    localStorage.setItem('editor_draft', JSON.stringify({
+                        title: title,
+                        language: document.getElementById('languageSelect').value,
+                        code: editor.getValue(),
+                        timestamp: Date.now()
+                    }));
+                }
+            }, 1000);
+        });
+    }
+}
+
+// Initialize auto-save after editor is ready
+setTimeout(initializeAutoSave, 100);
 
 // Load draft on page load
 window.addEventListener('load', function() {

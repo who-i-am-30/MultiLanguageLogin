@@ -10,23 +10,29 @@ def index():
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
         
-        if not username or not password:
-            flash('Username and password are required', 'error')
+        if not username or not email or not password:
+            flash('Username, email and password are required', 'error')
+            return render_template('register.html')
+        
+        # Check if email already exists
+        if User.query.filter_by(email=email).first():
+            flash('Email already registered', 'error')
             return render_template('register.html')
         
         # Generate unique 5-digit ID
         user_id = User.generate_unique_id()
         
         # Create new user
-        user = User(user_id=user_id, username=username)
+        user = User(user_id=user_id, username=username, email=email)
         user.set_password(password)
         
         try:
             db.session.add(user)
             db.session.commit()
-            flash(f'Registration successful! Your unique ID is: {user_id}', 'success')
+            flash(f'Registration successful! Your unique ID is: {user_id}. Use your email for full login or this ID for quick access.', 'success')
             return redirect(url_for('login'))
         except Exception as e:
             db.session.rollback()
@@ -38,35 +44,50 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_id = request.form['user_id']
-        password = request.form.get('password', '')
         login_type = request.form['login_type']
+        password = request.form.get('password', '')
         
-        user = User.query.filter_by(user_id=user_id).first()
+        user = None
         
-        if not user:
-            flash('Invalid user ID', 'error')
-            return render_template('login.html')
-        
-        if login_type == 'full' and password:
-            # Full login with password
+        if login_type == 'full':
+            # Full login with email and password
+            email = request.form['email']
+            if not email or not password:
+                flash('Email and password are required for full login', 'error')
+                return render_template('login.html')
+            
+            user = User.query.filter_by(email=email).first()
+            if not user:
+                flash('Invalid email address', 'error')
+                return render_template('login.html')
+            
             if user.check_password(password):
                 session['user_id'] = user.id
                 session['username'] = user.username
+                session['user_email'] = user.email
                 session['login_type'] = 'full'
-                flash('Login successful!', 'success')
+                flash('Full login successful!', 'success')
                 return redirect(url_for('editor'))
             else:
                 flash('Invalid password', 'error')
+                
         elif login_type == 'temp':
-            # Temporary login with just ID
+            # Temporary login with just 5-digit ID
+            user_id = request.form['user_id']
+            if not user_id:
+                flash('5-digit ID is required for quick access', 'error')
+                return render_template('login.html')
+            
+            user = User.query.filter_by(user_id=user_id).first()
+            if not user:
+                flash('Invalid 5-digit ID', 'error')
+                return render_template('login.html')
+            
             session['user_id'] = user.id
             session['username'] = user.username
             session['login_type'] = 'temp'
-            flash('Temporary login successful!', 'success')
+            flash('Quick access successful!', 'success')
             return redirect(url_for('editor'))
-        else:
-            flash('Please provide a password for full login', 'error')
     
     return render_template('login.html')
 
