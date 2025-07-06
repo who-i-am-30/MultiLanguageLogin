@@ -1,0 +1,93 @@
+Title: Multi-Language Code Library with Unique User ID Login
+
+Prompt:
+Build a full-stack web app using Python (Flask) and HTML/CSS/JavaScript that allows users to:
+
+Register with a 5-digit unique ID and password.
+
+Login using their ID and password. If using just the ID login option, store credentials only temporarily (session-based).
+
+View a Home Page with login/register options.
+
+Access a Code Editor Page (full screen) with:
+
+Syntax-highlighted editor (like CodeMirror or Ace).
+
+Input fields for selecting language and naming the code.
+
+Save code snippets to their personal library.
+
+Navigate to a Library Page where saved code is:
+
+Displayed in language-labeled boxes.
+
+Sorted by name, date, or language.
+
+Shareable via a unique link.
+
+Copyable with a "Copy" button in the top right of each code box.
+
+Shows the username of the code owner on top.
+
+The app will not execute code — it's strictly a storage/view/share platform.
+
+Use:
+
+Flask for backend (auth, saving snippets).
+
+HTML/CSS + JS for frontend.
+
+CodeMirror or Ace Editor for code syntax highlighting.
+
+Store data in JSON or SQLite (your choice).
+
+Maintain clean, responsive UI and security basics (hashed passwords, etc.).
+
+🧩 Suggested App Structure (Pages):
+Home Page (/)
+
+Options: Register | Login with Password | Login with 5-digit ID
+
+If using 5-digit ID: use session storage only; clear on browser close.
+
+Brief intro: "Store and share your favorite code snippets."
+
+Register Page (/register)
+
+Ask for name and password
+
+Generate and display a random unique 5-digit ID after registration
+
+Login Page (/login)
+
+Login with either ID + Password OR just the ID (temporary session)
+
+Code Editor Page (/editor)
+
+Fullscreen code editor with syntax highlighting
+
+Dropdown to select language (Python, C, JavaScript, etc.)
+
+Input field for "Snippet Name"
+
+Save button → stores the code
+
+Library Page (/library)
+
+Grid of saved code cards:
+
+Each card shows language (top left), owner (top center), copy button (top right)
+
+Syntax-highlighted code
+
+Sorting/filtering options (date, name, language)
+
+Shareable links to individual snippets (/view/<snippet_id>)
+
+Snippet View Page (/view/<snippet_id>)
+
+Read-only display of the code snippet
+
+Owner name
+
+Copy button
