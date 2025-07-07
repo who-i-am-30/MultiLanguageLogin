@@ -16,23 +16,23 @@
                 <h1 class="display-3 fw-bold mb-3 bg-gradient text-primary">CodeVault</h1>
                 <p class="lead text-muted mb-4">Your personal code snippet sanctuary. Store, organize, and share beautiful code with syntax highlighting and lightning-fast access.</p>
                 <div class="d-flex justify-content-center gap-2 mb-4">
-                    <span class="badge bg-primary-subtle text-primary px-3 py-2">Syntax Highlighting</span>
-                    <span class="badge bg-success-subtle text-success px-3 py-2">Instant Sharing</span>
-                    <span class="badge bg-warning-subtle text-warning px-3 py-2">Quick Access</span>
+                    <span class="badge px-3 py-2" style="background-color: var(--custom-blue); color: var(--custom-navy);">Syntax Highlighting</span>
+                    <span class="badge px-3 py-2" style="background-color: var(--custom-light); color: var(--custom-navy);">Instant Sharing</span>
+                    <span class="badge px-3 py-2" style="background-color: var(--custom-dark-blue); color: var(--custom-light);">Quick Access</span>
                 </div>
             </div>
 
             {% if not session.user_id %}
                 <div class="row g-4">
                     <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--bs-success-bg-subtle) 0%, var(--bs-primary-bg-subtle) 100%);">
+                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--custom-blue) 20%, var(--custom-light) 100%); border: 2px solid var(--custom-blue);">
                             <div class="card-body text-center p-4">
                                 <div class="mb-3">
-                                    <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                                    <i class="fas fa-user-plus fa-3x mb-3" style="color: var(--custom-dark-blue);"></i>
                                 </div>
-                                <h5 class="card-title fw-bold">Join CodeVault</h5>
-                                <p class="card-text">Create your account and get instant access with your unique 5-digit ID</p>
-                                <a href="{{ url_for('register') }}" class="btn btn-success btn-lg px-4">
+                                <h5 class="card-title fw-bold" style="color: var(--custom-navy);">Join CodeVault</h5>
+                                <p class="card-text" style="color: var(--custom-dark-blue);">Create your account and get instant access with your unique 5-digit ID</p>
+                                <a href="{{ url_for('register') }}" class="btn btn-lg px-4" style="background-color: var(--custom-dark-blue); border-color: var(--custom-dark-blue); color: var(--custom-light);">
                                     <i class="fas fa-rocket me-2"></i>Get Started
                                 </a>
                             </div>
@@ -40,14 +40,14 @@
                     </div>
                     
                     <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--bs-primary-bg-subtle) 0%, var(--bs-info-bg-subtle) 100%);">
+                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--custom-dark-blue) 20%, var(--custom-blue) 100%); border: 2px solid var(--custom-dark-blue);">
                             <div class="card-body text-center p-4">
                                 <div class="mb-3">
-                                    <i class="fas fa-crown fa-3x text-primary mb-3"></i>
+                                    <i class="fas fa-crown fa-3x mb-3" style="color: var(--custom-light);"></i>
                                 </div>
-                                <h5 class="card-title fw-bold">Full Control</h5>
-                                <p class="card-text">Login with your email and password for complete access to all features</p>
-                                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4">
+                                <h5 class="card-title fw-bold" style="color: var(--custom-light);">Full Control</h5>
+                                <p class="card-text" style="color: var(--custom-light);">Login with your email and password for complete access to all features</p>
+                                <a href="{{ url_for('login') }}" class="btn btn-lg px-4" style="background-color: var(--custom-light); border-color: var(--custom-light); color: var(--custom-navy);">
                                     <i class="fas fa-sign-in-alt me-2"></i>Full Login
                                 </a>
                             </div>
@@ -55,14 +55,14 @@
                     </div>
                     
                     <div class="col-md-4">
-                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--bs-warning-bg-subtle) 0%, var(--bs-orange-bg-subtle) 100%);">
+                        <div class="card h-100 border-0 shadow-lg" style="background: linear-gradient(135deg, var(--custom-light) 20%, var(--custom-blue) 100%); border: 2px solid var(--custom-light);">
                             <div class="card-body text-center p-4">
                                 <div class="mb-3">
-                                    <i class="fas fa-bolt fa-3x text-warning mb-3"></i>
+                                    <i class="fas fa-bolt fa-3x mb-3" style="color: var(--custom-navy);"></i>
                                 </div>
-                                <h5 class="card-title fw-bold">Lightning Fast</h5>
-                                <p class="card-text">Quick login with your memorable 5-digit ID and password for streamlined access!</p>
-                                <a href="{{ url_for('login') }}" class="btn btn-warning btn-lg px-4">
+                                <h5 class="card-title fw-bold" style="color: var(--custom-navy);">Lightning Fast</h5>
+                                <p class="card-text" style="color: var(--custom-dark-blue);">Quick login with your memorable 5-digit ID and password for streamlined access!</p>
+                                <a href="{{ url_for('login') }}" class="btn btn-lg px-4" style="background-color: var(--custom-navy); border-color: var(--custom-navy); color: var(--custom-light);">
                                     <i class="fas fa-bolt me-2"></i>Quick Access
                                 </a>
                             </div>

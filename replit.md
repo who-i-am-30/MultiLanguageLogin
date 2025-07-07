@@ -98,7 +98,9 @@ This is a Flask-based web application that allows users to store, organize, and 
 
 ## Changelog
 - July 06, 2025. Initial setup
+- July 07, 2025. Updated color palette to custom scheme: E2E2B6, 6EACDA, 03346E, 021526
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Color palette: Light cream (#E2E2B6), Light blue (#6EACDA), Dark blue (#03346E), Navy (#021526)
