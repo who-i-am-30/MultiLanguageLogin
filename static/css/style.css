@@ -205,6 +205,25 @@
 
 .nav-link {
     font-weight: 500;
+    min-width: 100px;
+    text-align: center;
+}
+
+.navbar-nav .nav-item {
+    min-height: 50px;
+}
+
+.navbar-text {
+    min-width: 120px;
+    text-align: center;
+}
+
+/* User ID display styling */
+.user-id-display {
+    font-size: 0.7em;
+    line-height: 1;
+    margin-bottom: -2px;
+    color: var(--custom-blue);
 }
 
 /* Responsive adjustments */

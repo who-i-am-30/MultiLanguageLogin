@@ -36,27 +36,30 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     {% if session.user_id %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('editor') }}">
-                                <i class="fas fa-edit me-1"></i>Editor
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link px-3" href="{{ url_for('editor') }}">
+                                <i class="fas fa-edit me-2"></i>Editor
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('library') }}">
-                                <i class="fas fa-folder me-1"></i>Library
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link px-3" href="{{ url_for('library') }}">
+                                <i class="fas fa-folder me-2"></i>Library
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <span class="navbar-text me-3">
-                                <i class="fas fa-user me-1"></i>{{ session.username }}
-                                {% if session.login_type == 'temp' %}
-                                    <small class="text-muted">(Temp)</small>
-                                {% endif %}
-                            </span>
+                        <li class="nav-item d-flex align-items-center">
+                            <div class="navbar-text px-3">
+                                <i class="fas fa-user me-2"></i>
+                                <div class="d-inline-block">
+                                    {% if session.login_type == 'temp' %}
+                                        <div class="user-id-display">{{ session.user_id }}</div>
+                                    {% endif %}
+                                    <div>{{ session.username }}</div>
+                                </div>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">
-                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link px-3" href="{{ url_for('logout') }}">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
                             </a>
                         </li>
                     {% else %}
