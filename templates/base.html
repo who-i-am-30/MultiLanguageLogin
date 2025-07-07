@@ -48,13 +48,7 @@
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <div class="navbar-text px-3">
-                                <i class="fas fa-user me-2"></i>
-                                <div class="d-inline-block">
-                                    {% if session.login_type == 'temp' %}
-                                        <div class="user-id-display">{{ session.user_id }}</div>
-                                    {% endif %}
-                                    <div>{{ session.username }}</div>
-                                </div>
+                                <i class="fas fa-user me-2"></i>{{ session.username }}
                             </div>
                         </li>
                         <li class="nav-item d-flex align-items-center">
